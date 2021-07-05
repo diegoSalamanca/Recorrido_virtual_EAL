@@ -8,8 +8,10 @@ public class VideController : MonoBehaviour
 {
     #region VARS
 
+    
     //These are the references to UI components and containers in the scene
     [Header("References")]
+
     public GameObject dialogueContainer;
     public GameObject NPC_Container;
     public GameObject playerContainer;
@@ -26,6 +28,8 @@ public class VideController : MonoBehaviour
     public AudioSource audioSource;
 
     [Header("Options")]
+    public int fSize;
+
     public KeyCode interactionKey;
     public bool NPC_animateText;
     public bool player_animateText;
@@ -46,6 +50,21 @@ public class VideController : MonoBehaviour
 
     #region MAIN
 
+    public void TalkerStart()
+    {
+        var player = PlayerInteract.talker.GetComponent<VIDE_Assign>();
+        Interact(player);
+        if (Instructions.state == 3)
+            FindObjectOfType<Instructions>().removeInstruction();
+    }
+
+    public void TalkerEnd()
+    {
+        var player = PlayerInteract.talker.GetComponent<VIDE_Assign>();
+        
+        EndDialogue(null);
+    }
+
     void Awake()
     {
 
@@ -54,6 +73,7 @@ public class VideController : MonoBehaviour
     }
 
     //Call this to begin the dialogue and advance through it
+    //public void Interact(VIDE_Assign dialogue)
     public void Interact(VIDE_Assign dialogue)
     {
         //Sometimes, we might want to check the ExtraVariables and VAs before moving forward
@@ -285,7 +305,7 @@ public class VideController : MonoBehaviour
 
     //Unsuscribe from everything, disable UI, and end dialogue
     //Called automatically because we subscribed to the OnEnd event
-    void EndDialogue(VD.NodeData data)
+    public void EndDialogue(VD.NodeData data)
     {
         VD.OnActionNode -= ActionHandler;
         VD.OnNodeChange -= UpdateUI;
@@ -342,15 +362,15 @@ public class VideController : MonoBehaviour
             //Checks for extraData that concerns font size (CrazyCap node 2)
             if (data.extraData[data.commentIndex].Contains("fs"))
             {
-                int fSize = 14;
+                
 
                 string[] fontSize = data.extraData[data.commentIndex].Split(","[0]);
-                int.TryParse(fontSize[1], out fSize);
+                //int.TryParse(fontSize[1], out fSize);
                 NPC_Text.fontSize = fSize;
             }
             else
             {
-                NPC_Text.fontSize = 14;
+                NPC_Text.fontSize = fSize;
             }
         }
         else

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using VIDE_Data;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerInteract : MonoBehaviour
     public Camera camera;
     public float rayDistance;
     public Button buttontalker;
+    public static GameObject talker;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,18 +30,39 @@ public class PlayerInteract : MonoBehaviour
         {
             if (hit.transform.CompareTag("talker"))
             {
-                buttontalker.interactable = true;
-                print("hit");
+                
+               buttontalker.gameObject.SetActive(true);
+
+                
+                talker = hit.transform.gameObject;
+
+                if(Instructions.state==2)
+                    FindObjectOfType<Instructions>().SetInstruction(3);
+                //print("hit");
             }
             else 
             {
-                buttontalker.interactable = false;
+                buttontalker.gameObject.SetActive(false);
+
+                if (GameObject.Find("VideContainer"))
+                {
+                    FindObjectOfType<VideController>().TalkerEnd();
+                    //print("Ends");
+                }
             }            
         }
         else
         {
-            buttontalker.interactable = false;
+            buttontalker.gameObject.SetActive(false);
+
+            if (GameObject.Find("VideContainer"))
+            {
+                FindObjectOfType<VideController>().TalkerEnd();
+                print("Ends");
+            }
         }
     }
+
+    
 }
 
