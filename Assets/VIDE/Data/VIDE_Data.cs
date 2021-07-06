@@ -1611,6 +1611,18 @@ namespace VIDE_Data
 
             }
 
+            /*for (int i = 0; i < diags.Count; i++)
+            {
+                currentDiag = diags.IndexOf(diags[i]);
+
+                if (diags[i].name == dialogueName)
+                {
+                    Load(diags[i].name);
+                    didLoad = true;
+                    break;
+                }
+            }*/
+
             if (!didLoad)
                 Debug.LogError("Found no dialogue(s) to load!");
 
@@ -1626,11 +1638,18 @@ namespace VIDE_Data
         public static void LoadDialogues()
         {
             FetchDiags();
+
             foreach (Diags d in diags)
             {
                 currentDiag = diags.IndexOf(d);
                 Load(d.name);
             }
+
+            /*for (int i = 0; i < diags.Count; i++)
+            {
+                currentDiag = diags.IndexOf(diags[i]);
+                Load(diags[i].name);
+            }*/
 
             if (OnLoaded != null)
                 OnLoaded();

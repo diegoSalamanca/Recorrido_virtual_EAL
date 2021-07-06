@@ -13,11 +13,7 @@ public class PlayerInteract : MonoBehaviour
     public Button buttontalker;
     public static GameObject talker;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        buttontalker.interactable = false;
-    }
+   
 
     // Update is called once per frame
     void Update()
@@ -36,8 +32,11 @@ public class PlayerInteract : MonoBehaviour
                 
                 talker = hit.transform.gameObject;
 
-                if(Instructions.state==2)
+                if (Instructions.state == 2)
+                {
                     FindObjectOfType<Instructions>().SetInstruction(3);
+                }
+                    
                 //print("hit");
             }
             else 

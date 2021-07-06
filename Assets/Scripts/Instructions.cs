@@ -32,7 +32,7 @@ public class Instructions : MonoBehaviour
 
     public void SetInstruction(int index)
     {
-
+        StopAllCoroutines();
         state = index;
 
         if (active)
@@ -54,12 +54,19 @@ public class Instructions : MonoBehaviour
         canvasGroup.alpha = 0;
         if (state == 0)
         {
-            StartCoroutine(DelayInstructions(1, 3));
+            StartCoroutine(DelayInstructions(1, 2));
         }
         if (state == 1)
         {
-            StartCoroutine(DelayInstructions(2, 3));
+            StartCoroutine(DelayInstructions(2, 2));
         }
+
+        foreach (var item in arrows)
+        {
+            item.SetActive(false);
+        }
+
+        text.text = "";
     }
 
 
